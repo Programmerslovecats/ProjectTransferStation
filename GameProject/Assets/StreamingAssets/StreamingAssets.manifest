@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3786501555
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: test/mybuilds.unity3d
+      Dependencies: {}
