@@ -18,16 +18,7 @@ function MyBuildsCtrl.Awake()
     panelMgr:CreatePanel('test/MyBuilds', this.OnCreate);
 end
 
-Player={}
 
-function Player.Awake()
-    print("PlayerLogic.Awake is open")
-end
-
-function Player.OnCollisionEnter(myself,other)
-	LuaFramework.Util.LogError(myself.name)
-	LuaFramework.Util.LogError(other.name)
-end
 
 function MyBuildsCtrl.Start()
     print(" MyBuildsCtrl.Start is open")
@@ -48,6 +39,10 @@ end
 
 
 
+EventManager.AddEventCallBack("OnCollisionEnter",function(myObj,otherObj)
+    LuaFramework.Util.LogError(myObj.name.."        "..otherObj.name)
+end)
+
 function ActionEvent()
     ---接收消息回调
     EventManager.AddEventCallBack("TestEventCallBack",function(str)
@@ -66,7 +61,7 @@ function Test(str)
     print(str.."22222222222")
     --EventManager.RemoveEventCallBack("TestEventCallBack",Test) --移除这个事件类型的这个handle回调
     --EventManager.RemoveAllEventCallBack('TestEventCallBack'); --移除这个事件类型下添加的所有handle回调
-    EventManager.RemoveAllEvent()--移除全部事件监听
+    --EventManager.RemoveAllEvent()--移除全部事件监听
 end
 
 

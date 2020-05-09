@@ -63,11 +63,9 @@ function this.DispenseEvent(messageName,...)
         logWarn(messageName.." events have not beed added or has been remove")
         return
     end
-    print('DispenseEvent is open')
     --Event.Brocast(messageName,...)
     local currentEventList=this['EventList'][messageName]
     for k,v in pairs(currentEventList) do
-        print(messageName)
         v(...)
     end
 end
@@ -116,6 +114,16 @@ function this.FindEvent(messageName)
     end
 end
 
-
+--[[
+    @desc: 生命周期事件回调 （碰撞）
+    author:{author}
+    time:2020-05-05 14:19:04
+    --@periodName: 回调事件的名称
+    --@...: 参数
+    @return
+]]
+function this.CshapPeriodCallBack(periodName,...)
+    this.DispenseEvent(periodName,...)
+end
 
 return EventManager

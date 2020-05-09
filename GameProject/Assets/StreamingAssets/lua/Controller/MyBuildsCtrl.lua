@@ -18,16 +18,7 @@ function MyBuildsCtrl.Awake()
     panelMgr:CreatePanel('test/MyBuilds', this.OnCreate);
 end
 
-Player={}
 
-function Player.Awake()
-    print("PlayerLogic.Awake is open")
-end
-
-function Player.OnCollisionEnter(myself,other)
-	LuaFramework.Util.LogError(myself.name)
-	LuaFramework.Util.LogError(other.name)
-end
 
 function MyBuildsCtrl.Start()
     print(" MyBuildsCtrl.Start is open")
@@ -46,23 +37,41 @@ function MyBuildsCtrl.OnCreate(obj)
   
 end
 
-function Test(str)
-    print(str.."22222222222")
-    --EventManager.RemoveEventCallBack("TestEventCallBack",Test) --移除这个事件的回调
-    EventManager.RemoveAllCallBack('TestEventCallBack');
+
+Player={}
+
+function Player.Awake()
+    print("PlayerLogic.Awake is open")
 end
 
----接收消息回调
-EventManager.AddEventCallBack("TestEventCallBack",function(str)
-    print(str.."111111111111111")
-   -- EventManager.RemoveEventCallBack("TestEventCallBack") --移除这个事件的回调
-end)
+function Player.OnCollisionEnter(myself,other)
+	LuaFramework.Util.LogError(myself.name)
+	LuaFramework.Util.LogError(other.name)
+end
 
-EventManager.AddEventCallBack("TestEventCallBack",Test)
 
-EventManager.AddEventCallBack("TestEventCallBack2",function()
-    print(" TestEventCallBack2  is  open")
-end)
+
+function ActionEvent()
+    ---接收消息回调
+    EventManager.AddEventCallBack("TestEventCallBack",function(str)
+        print(str.."111111111111111")
+    -- EventManager.RemoveEventCallBack("TestEventCallBack") --移除这个事件的回调
+    end)
+
+    EventManager.AddEventCallBack("TestEventCallBack",Test)
+
+    EventManager.AddEventCallBack("TestEventCallBack2",function()
+        print(" TestEventCallBack2  is  open")
+    end)
+end
+
+function Test(str)
+    print(str.."22222222222")
+    --EventManager.RemoveEventCallBack("TestEventCallBack",Test) --移除这个事件类型的这个handle回调
+    --EventManager.RemoveAllEventCallBack('TestEventCallBack'); --移除这个事件类型下添加的所有handle回调
+    EventManager.RemoveAllEvent()--移除全部事件监听
+end
+
 
 function MyBuildsCtrl.InitPanel(objs)
     local count=8
@@ -120,5 +129,6 @@ function MyBuildsCtrl.Update2()
     print("每帧调用2222222222222");
 end
 
+ActionEvent() --注册事件回调
 
 return MyBuildsCtrl 

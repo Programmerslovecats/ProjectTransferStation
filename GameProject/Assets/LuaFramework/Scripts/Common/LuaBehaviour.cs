@@ -21,36 +21,35 @@ namespace LuaFramework {
 
         protected void OnTriggerEnter(Collider other)
         {
-            Debugger.Log(other.gameObject.name);
             //触发器回调
-            Util.CallMethod(name, "OnTriggerEnter",other.gameObject);
+            Util.CallMethod("EventManager", "CshapPeriodCallBack", "OnTriggerEnter", gameObject, other.gameObject);
         }
         protected void OnTriggerExit(Collider other)
         {
             //离开触发器回调
-            Util.CallMethod(name, "OnTriggerExit", gameObject, other.gameObject);
+            Util.CallMethod("EventManager", "CshapPeriodCallBack", "OnTriggerExit", gameObject, other.gameObject);
         }
 
         protected void OnCollisionEnter(Collision collision)
         {
             //进入碰撞回调
-            Util.CallMethod(name, "OnCollisionEnter", gameObject,collision.gameObject);
+            Util.CallMethod("EventManager", "CshapPeriodCallBack", "OnCollisionEnter", gameObject, collision.gameObject);
         }
 
         protected void OnCollisionExit(Collision collision)
-        {
+        { 
             //离开碰撞回调
-            Util.CallMethod(name, "OnCollisionExit", gameObject, collision.gameObject);
+            Util.CallMethod("EventManager", "CshapPeriodCallBack", "OnCollisionExit", gameObject, collision.gameObject);
         }
 
        
 
         protected void OnClick() {
-            Util.CallMethod(name, "OnClick");   
+            Util.CallMethod("PlayerTest", "OnClick");   
         }
 
         protected void OnClickEvent(GameObject go) {
-            Util.CallMethod(name, "OnClick", go);
+            Util.CallMethod("PlayerTest", "OnClick", go);
         }
 
         /// <summary>

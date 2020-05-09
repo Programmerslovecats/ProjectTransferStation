@@ -1,5 +1,5 @@
 
-
+require "Common/functions"
 
 EventManager={}
 
@@ -63,36 +63,39 @@ function this.DispenseEvent(messageName,...)
         logWarn(messageName.." events have not beed added or has been remove")
         return
     end
-    print('DispenseEvent is open')
-        --Event.Brocast(messageName,...)
+    --Event.Brocast(messageName,...)
     local currentEventList=this['EventList'][messageName]
     for k,v in pairs(currentEventList) do
-        print(messageName)
         v(...)
     end
 end
 
 --[[
-    @desc: 移除全部注册的事件
+    @desc: 移除对应messageName的全部事件监听
     author:{author}
-    time:2020-05-05 14:00:13
+    time:2020-05-05 17:16:37
+    --@messageName: 事件监听的名称
     @return:
 ]]
-function this.RemoveAllCallBack(messageName)
-    if IsTable(this['EventList'][messageName])==false or this['EventList'][messageName]==nil then
+function this.RemoveAllEventCallBack(messageName)
+    if IsTable(this['EventList'][messageName])==false or next(this['EventList'][messageName])==nil then
         logWarn(messageName.." events have not beed added or has been remove")
         return 
     end
-
     for k,v in pairs(this['EventList'][messageName]) do
         this.RemoveEventCallBack(messageName,v)
     end
-    dump(this['EventList'])
     this['EventList'][messageName]={}
-    dump(this['EventList'])
 end
 
-function this.RemoveAllCallBack()
+
+--[[
+    @desc: 移除全部的事件监听
+    author:{author}
+    time:2020-05-05 17:17:38
+    @return:
+]]
+function this.RemoveAllEvent()
     this['EventList']={}
 end
 
@@ -109,6 +112,11 @@ function this.FindEvent(messageName)
     else
         return this['EventList'][messageName]
     end
+end
+
+function this.CshapPeriodCallBack(periodName,...)
+    print(periodName)
+    this.DispenseEvent(periodName,...)
 end
 
 
