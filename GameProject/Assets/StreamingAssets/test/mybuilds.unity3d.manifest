@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 121329570
+CRC: 4021813563
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 21a1a0fa7199b22e870580c8d3932a9c
+    Hash: 9cefc1e8e771bbc295bf9a1335c3e789
   TypeTreeHash:
     serializedVersion: 2
     Hash: 13701f59458467d27fcf1a0cc5de9245
@@ -42,6 +42,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
+- "Assets/LuaFramework/Examples/Textures/MyBuilds/\u5E0C\u513F.jpg"
 - Assets/LuaFramework/Examples/Builds/MyBuilds/MyBuildsItem.prefab
 - Assets/LuaFramework/Examples/Builds/MyBuilds/MyBuildsPanel.prefab
 Dependencies: []

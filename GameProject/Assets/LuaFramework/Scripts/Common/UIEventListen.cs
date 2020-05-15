@@ -4,6 +4,7 @@ using UnityEngine;
 using LuaInterface;
 using UnityEngine.UI;
 using LuaFramework;
+using System;
 
 /// <summary>
 /// 管理UI的Click事件
@@ -31,9 +32,9 @@ public class UIEventListen
     public void RemoveClick(GameObject go)
     {
         Debug.Log(go.name);
-        if (ClickDic.ContainsKey(go) == false)
+        if (ClickDic.FTryGetValue(go) == false)
         {
-            Debugger.Log(go+"是否存在于字典："+ ClickDic.ContainsKey(go));
+            Debugger.Log(go+"是否存在于字典："+ ClickDic.FTryGetValue(go));
             return;
         }
         go.GetComponent<Button>().onClick.RemoveListener(ClickDic[go]);
@@ -62,10 +63,12 @@ public class UIEventListen
             Debugger.Log("OnClick Dictionary is Null ");
             return;
         }
-        foreach (var item in ClickDic)
+       var dic  = ClickDic.GetEnumerator();
+        while(dic.MoveNext())
         {
-            Debugger.Log(item.Key.name + "                 " + item.Value);
+            Debugger.Log(dic.Current.Key.name + "                 " + dic.Current.Value.ToString());
         }
+
     }
 
     

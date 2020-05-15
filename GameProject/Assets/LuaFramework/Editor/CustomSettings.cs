@@ -8,6 +8,7 @@ using UnityEditor;
 using BindType = ToLuaMenu.BindType;
 using UnityEngine.UI;
 using System.Reflection;
+using UnityEngine.Networking;
 
 public static class CustomSettings
 {
@@ -115,6 +116,7 @@ public static class CustomSettings
         _GT(typeof(Shader)),
         _GT(typeof(Renderer)),
         _GT(typeof(WWW)),
+        _GT(typeof(UnityWebRequest)),
         _GT(typeof(Screen)),
         _GT(typeof(CameraClearFlags)),
         _GT(typeof(AudioClip)),
@@ -126,7 +128,8 @@ public static class CustomSettings
 
 #region //自添类
         _GT(typeof(UIEventListen)),
-      
+        _GT(typeof(PeriodCallBackManager)),
+        _GT(typeof(PeriodCallBackManager.CallBackEnum)),
 #endregion
 
 #if UNITY_5_3_OR_NEWER && !UNITY_5_6_OR_NEWER
@@ -188,7 +191,7 @@ public static class CustomSettings
         _GT(typeof(SoundManager)),
         _GT(typeof(TimerManager)),
         _GT(typeof(ThreadManager)),
-        _GT(typeof(NetworkManager)),
+        _GT(typeof(LuaFramework.NetworkManager)),
         _GT(typeof(ResourceManager)),		  
         _GT(typeof(LuaLooper)),
     };

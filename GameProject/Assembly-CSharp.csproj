@@ -92,6 +92,8 @@
     <Compile Include="Assets\LuaFramework\LiteNetLib\Utils\NetSerializer.cs" />
     <Compile Include="Assets\LuaFramework\Scripts\Common\LuaBehaviour.cs" />
     <Compile Include="Assets\LuaFramework\Scripts\Common\LuaLoader.cs" />
+    <Compile Include="Assets\LuaFramework\Scripts\Common\PeriodCallBackManager.cs" />
+    <Compile Include="Assets\LuaFramework\Scripts\Common\SingletonManager.cs" />
     <Compile Include="Assets\LuaFramework\Scripts\Common\UIEventListen.cs" />
     <Compile Include="Assets\LuaFramework\Scripts\ConstDefine\AppConst.cs" />
     <Compile Include="Assets\LuaFramework\Scripts\ConstDefine\ManagerName.cs" />
@@ -245,6 +247,8 @@
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_LuaManagerWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_NetworkManagerWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_PanelManagerWrap.cs" />
+    <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_PeriodCallBackManager_CallBackEnumWrap.cs" />
+    <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_PeriodCallBackManagerWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_ResourceManagerWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_SoundManagerWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaFramework_ThreadManagerWrap.cs" />
@@ -257,6 +261,7 @@
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaProfilerWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\LuaValueInfoWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\ManagerWrap.cs" />
+    <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\SingletonManager_LuaFramework_PeriodCallBackManagerWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UIEventListenWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_AnimationBlendModeWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_AnimationClipWrap.cs" />
@@ -287,6 +292,7 @@
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_MeshColliderWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_MeshRendererWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_MonoBehaviourWrap.cs" />
+    <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_Networking_UnityWebRequestWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_ParticleSystemWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_PhysicsWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_PlayModeWrap.cs" />

@@ -15,6 +15,7 @@ public static class LuaBinder
 		UIEventListenWrap.Register(L);
 		LuaProfilerWrap.Register(L);
 		LuaLooperWrap.Register(L);
+		SingletonManager_LuaFramework_PeriodCallBackManagerWrap.Register(L);
 		ViewWrap.Register(L);
 		BaseWrap.Register(L);
 		ManagerWrap.Register(L);
@@ -63,6 +64,9 @@ public static class LuaBinder
 		UnityEngine_ResourcesWrap.Register(L);
 		UnityEngine_RectTransformWrap.Register(L);
 		UnityEngine_AudioBehaviourWrap.Register(L);
+		L.BeginModule("Networking");
+		UnityEngine_Networking_UnityWebRequestWrap.Register(L);
+		L.EndModule();
 		L.BeginModule("UI");
 		UnityEngine_UI_TextWrap.Register(L);
 		UnityEngine_UI_MaskableGraphicWrap.Register(L);
@@ -91,6 +95,7 @@ public static class LuaBinder
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("LuaFramework");
+		LuaFramework_PeriodCallBackManagerWrap.Register(L);
 		LuaFramework_UtilWrap.Register(L);
 		LuaFramework_AppConstWrap.Register(L);
 		LuaFramework_LuaHelperWrap.Register(L);
@@ -104,6 +109,9 @@ public static class LuaBinder
 		LuaFramework_ThreadManagerWrap.Register(L);
 		LuaFramework_NetworkManagerWrap.Register(L);
 		LuaFramework_ResourceManagerWrap.Register(L);
+		L.BeginModule("PeriodCallBackManager");
+		LuaFramework_PeriodCallBackManager_CallBackEnumWrap.Register(L);
+		L.EndModule();
 		L.EndModule();
 		L.BeginModule("System");
 		L.RegFunction("Action", System_Action);

@@ -178,6 +178,7 @@ public class Packager {
         string resPath = AppDataPath + "/" + AppConst.AssetDir + "/";
         if (!Directory.Exists(resPath)) Directory.CreateDirectory(resPath);
         AddBuildMap("Test/MyBuilds" + AppConst.ExtName, "*.prefab", "Assets/LuaFramework/Examples/Builds/MyBuilds");
+        AddBuildMap("Test/MyBuilds" + AppConst.ExtName, "*.jpg", "Assets/LuaFramework/Examples/Textures/MyBuilds");
     }
 
 

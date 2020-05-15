@@ -38,18 +38,10 @@ function MyBuildsCtrl.OnCreate(obj)
 end
 
 
-Player={}
-
-function Player.Awake()
-    print("PlayerLogic.Awake is open")
-end
-
-function Player.OnCollisionEnter(myself,other)
-	LuaFramework.Util.LogError(myself.name)
-	LuaFramework.Util.LogError(other.name)
-end
-
-
+--注册碰撞事件
+-- EventManager.AddEventCallBack("OnCollisionEnter",function(myObj,otherObj)
+--     LuaFramework.Util.LogError(myObj.name.."        "..otherObj.name)
+-- end)
 
 function ActionEvent()
     ---接收消息回调
@@ -63,13 +55,18 @@ function ActionEvent()
     EventManager.AddEventCallBack("TestEventCallBack2",function()
         print(" TestEventCallBack2  is  open")
     end)
+    
+    -- periodCallBackMng:AddCallBack(callBackEnum.Awake,gameObject,function()
+    --     print(gameObject.name.." Awake is invoke")
+    -- end)
+
 end
 
 function Test(str)
     print(str.."22222222222")
     --EventManager.RemoveEventCallBack("TestEventCallBack",Test) --移除这个事件类型的这个handle回调
     --EventManager.RemoveAllEventCallBack('TestEventCallBack'); --移除这个事件类型下添加的所有handle回调
-    EventManager.RemoveAllEvent()--移除全部事件监听
+    --EventManager.RemoveAllEvent()--移除全部事件监听
 end
 
 
@@ -101,7 +98,16 @@ function MyBuildsCtrl.OnItemClick(obj)
     buffer:WriteString(obj.name);
     buffer:WriteInt(200);
     networkMgr:SendMessage(buffer);
+
+    local tim=Timer.New(MyBuildsCtrl.timerTest,1,-1,false)
+    tim:Start()
+
 end
+
+function MyBuildsCtrl.timerTest()
+    print("Test Timer Method Print")
+end
+
 
 function MyBuildsCtrl.OnClick(obj)
     print(obj.name..">>>>>>>>>>>>  btnLogin is click")
@@ -110,14 +116,14 @@ function MyBuildsCtrl.OnClick(obj)
     --UIEventListen:RemoveClick(transform:Find("btnLogin").gameObject);
     UIEventListen:DebugAction()
 
-    UpdateBeat:Connect(this.Update2)
+    FixedUpdateBeat:Connect(this.Update2)
 
     coroutine.start(function()
         coroutine.wait(3)
         -- UpdateBeat:RemoveListener(updatHandle1)
         -- UpdateBeat:RemoveListener(updatHandle2)
         --UpdateBeat:Clear()
-         UpdateBeat:DisConnect(this.Update2)
+        FixedUpdateBeat:DisConnect(this.Update2)
         -- UpdateBeat:DisConnect(this.Update2)
     end)
 end

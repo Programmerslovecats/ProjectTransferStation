@@ -37,7 +37,8 @@ panelMgr = LuaHelper.GetPanelManager();
 soundMgr = LuaHelper.GetSoundManager();
 networkMgr = LuaHelper.GetNetManager();
 
-
-
+periodCallBackMng=LuaFramework.PeriodCallBackManager.New();
+_callEnum=periodCallBackMng.callBackEnum
+print(_callEnum.Awake)
 WWW = UnityEngine.WWW;
 GameObject = UnityEngine.GameObject;

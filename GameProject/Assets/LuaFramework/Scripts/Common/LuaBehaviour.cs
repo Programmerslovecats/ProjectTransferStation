@@ -11,39 +11,44 @@ namespace LuaFramework {
         private Dictionary<string, LuaFunction> buttons = new Dictionary<string, LuaFunction>();
 
         protected void Awake() {
-            Util.CallMethod(name, "Awake", gameObject);
+            //Util.CallMethod(name, "Awake", gameObject);
             //Util.CallMethod(gameObject.GetInstanceID().ToString(), "Awake", gameObject);
+            PeriodCallBackManager.GetInstance().CallBack(PeriodCallBackManager.CallBackEnum.Awake, gameObject,null);
         }
 
         protected void Start() {
-            Util.CallMethod(name, "Start");
+           // Util.CallMethod(name, "Start");
+            PeriodCallBackManager.GetInstance().CallBack(PeriodCallBackManager.CallBackEnum.Start, gameObject,null);
         }
 
         protected void OnTriggerEnter(Collider other)
         {
             //触发器回调
-            Util.CallMethod("EventManager", "CshapPeriodCallBack", "OnTriggerEnter", gameObject, other.gameObject);
+            //Util.CallMethod("EventManager", "CshapPeriodCallBack", "OnTriggerEnter", gameObject, other.gameObject);
+            PeriodCallBackManager.GetInstance().CallBack(PeriodCallBackManager.CallBackEnum.TriggerEnter, gameObject, gameObject, other.gameObject);
         }
         protected void OnTriggerExit(Collider other)
         {
-            //离开触发器回调
-            Util.CallMethod("EventManager", "CshapPeriodCallBack", "OnTriggerExit", gameObject, other.gameObject);
+               //离开触发器回调
+               //Util.CallMethod("EventManager", "CshapPeriodCallBack", "OnTriggerExit", gameObject, other.gameObject);
+               PeriodCallBackManager.GetInstance().CallBack(PeriodCallBackManager.CallBackEnum.TriggerExit, gameObject, gameObject, other.gameObject);
         }
 
         protected void OnCollisionEnter(Collision collision)
         {
             //进入碰撞回调
-            Util.CallMethod("EventManager", "CshapPeriodCallBack", "OnCollisionEnter", gameObject, collision.gameObject);
+            //Util.CallMethod("EventManager", "CshapPeriodCallBack", "OnCollisionEnter", gameObject, collision.gameObject);
+            PeriodCallBackManager.GetInstance().CallBack(PeriodCallBackManager.CallBackEnum.CollisionEnter, gameObject, gameObject, collision.gameObject);
         }
 
         protected void OnCollisionExit(Collision collision)
         { 
             //离开碰撞回调
-            Util.CallMethod("EventManager", "CshapPeriodCallBack", "OnCollisionExit", gameObject, collision.gameObject);
+            //Util.CallMethod("EventManager", "CshapPeriodCallBack", "OnCollisionExit", gameObject, collision.gameObject);
+            PeriodCallBackManager.GetInstance().CallBack(PeriodCallBackManager.CallBackEnum.CollisionExit, gameObject, gameObject, collision.gameObject);
         }
 
-       
-
+ 
         protected void OnClick() {
             Util.CallMethod("PlayerTest", "OnClick");   
         }
@@ -94,6 +99,7 @@ namespace LuaFramework {
 
         //-----------------------------------------------------------------
         protected void OnDestroy() {
+            PeriodCallBackManager.GetInstance().Destroy(gameObject); 
             ClearClick();
 #if ASYNC_MODE
             string abName = name.ToLower().Replace("panel", "");

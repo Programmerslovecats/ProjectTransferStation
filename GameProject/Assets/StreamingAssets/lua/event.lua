@@ -4,6 +4,8 @@
 --      Use, modification and distribution are subject to the "MIT License"
 --------------------------------------------------------------------------------
 
+require "Common/functions"
+
 local setmetatable = setmetatable
 local xpcall = xpcall
 local pcall = pcall
@@ -204,8 +206,12 @@ function _event:Connect(func)
 	assert(type(func)=='function',
 		'   error value type is not \'function\' Please input type is \'function\' value!'
 	)
-	local updatehandle=UpdateBeat:CreateListener(func,self)
-	UpdateBeat:AddListener(updatehandle)
+	assert(self == UpdateBeat or self == LateUpdateBeat or self==FixedUpdateBeat or self==CoUpdateBeat,
+		'   error Connect value It must be  UpdateBeat or  LateUpdateBeat or  FixedUpdateBeat or  CoUpdateBeat '
+	)
+	local updatehandle=self:CreateListener(func,self)
+
+	self:AddListener(updatehandle)
 	handleTable[func]=updatehandle
 end
 
@@ -213,11 +219,14 @@ function _event:DisConnect(func)
 	assert(type(func)=='function',
 		'   error value type is not \'function\' Please input type is \'function\' value!'
 	)
+	assert(self == UpdateBeat or self == LateUpdateBeat or self==FixedUpdateBeat or self==CoUpdateBeat,
+		'   error DisConnect value It must be  UpdateBeat or  LateUpdateBeat or  FixedUpdateBeat or  CoUpdateBeat '
+	)
 	assert(handleTable[func]~=nil,
 		'    error Did not add this \'function\' , dont need DisConnect!'
 	)
 	local handle=handleTable[func]
-	UpdateBeat:RemoveListener(handle)
+	self:RemoveListener(handle)
 
 end
 

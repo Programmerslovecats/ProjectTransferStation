@@ -34,14 +34,15 @@ function MyBuildsCtrl.OnCreate(obj)
     print(tostring(transform:Find("btnLogin").gameObject.name))
     UIEventListen:AddClick(transform:Find("btnLogin").gameObject,this.OnClick);
     resMgr:LoadPrefab("test/MyBuilds",{"MyBuildsItem"},this.InitPanel)
-  
+
+
 end
 
 
-
-EventManager.AddEventCallBack("OnCollisionEnter",function(myObj,otherObj)
-    LuaFramework.Util.LogError(myObj.name.."        "..otherObj.name)
-end)
+--注册碰撞事件
+-- EventManager.AddEventCallBack("OnCollisionEnter",function(myObj,otherObj)
+--     LuaFramework.Util.LogError(myObj.name.."        "..otherObj.name)
+-- end)
 
 function ActionEvent()
     ---接收消息回调
@@ -55,6 +56,41 @@ function ActionEvent()
     EventManager.AddEventCallBack("TestEventCallBack2",function()
         print(" TestEventCallBack2  is  open")
     end)
+
+    -- local Player=UnityEngine.GameObject.Find("Player")
+    -- local Player1=UnityEngine.GameObject.Find("Player1")
+    -- local Player2=UnityEngine.GameObject.Find("Player2")
+    -- local Player3=UnityEngine.GameObject.Find("Player3")
+    -- local Player4=UnityEngine.GameObject.Find("Player4")
+    
+    -- PeriodCallBackMng:AddCallBack(CallBackEnum.CollisionEnter,Player,function(obj)
+    --     print(obj[0].name.." CollisionEnter is invoke  Collistion obj is"..obj[1].name)
+    -- end)
+    -- PeriodCallBackMng:AddCallBack(CallBackEnum.CollisionEnter,Player1,function(obj)
+    --     print(obj[0].name.." CollisionEnter is invoke  Collistion obj is"..obj[1].name)
+    -- end)
+    -- PeriodCallBackMng:AddCallBack(CallBackEnum.CollisionEnter,Player2,function(obj)
+    --     print(obj[0].name.." CollisionEnter is invoke  Collistion obj is"..obj[1].name)
+    -- end)
+    -- PeriodCallBackMng:AddCallBack(CallBackEnum.CollisionEnter,Player3,function(obj)
+    --     print(obj[0].name.." CollisionEnter is invoke  Collistion obj is"..obj[1].name)
+    -- end)
+    -- PeriodCallBackMng:AddCallBack(CallBackEnum.CollisionEnter,Player4,function(obj)
+    --     print(obj[0].name.." CollisionEnter is invoke  Collistion obj is"..obj[1].name)
+    -- end)
+    -- Player:AddComponent(typeof(LuaFramework.LuaBehaviour))
+    -- Player1:AddComponent(typeof(LuaFramework.LuaBehaviour))
+    -- Player2:AddComponent(typeof(LuaFramework.LuaBehaviour))
+    -- Player3:AddComponent(typeof(LuaFramework.LuaBehaviour))
+    -- Player4:AddComponent(typeof(LuaFramework.LuaBehaviour))
+    -- local dic=periodCallBackMng:GetObjAllCallBack(Player1)
+    -- local iter = dic:GetEnumerator()
+    -- while iter:MoveNext() do
+    --     local v = iter.Current.Value
+    --     print("key = "..iter.Current.Key);    
+    --     print("Value = "..tostring(v))                        
+    -- end
+
 end
 
 function Test(str)
@@ -69,6 +105,10 @@ function MyBuildsCtrl.InitPanel(objs)
     local count=8
     for i=1,count,1 do
         local go=newObject(objs[0])
+        PeriodCallBackMng:AddCallBack(CallBackEnum.Awake,go,function()
+            print("Awake callback is invoke")
+        end)
+        go:AddComponent(typeof(LuaFramework.LuaBehaviour))
         go.name=objs[0].name..i
         go.transform:Find('txtItemName'):GetComponent("Text").text=objs[0].name..i
         go.transform:SetParent(transform:Find("imgBackground"))
@@ -82,8 +122,7 @@ function MyBuildsCtrl.OnItemClick(obj)
     EventManager.DispenseEvent("TestEventCallBack","发送事件成功！！")
     EventManager.DispenseEvent("TestEventCallBack2")
 
-    local Player=UnityEngine.GameObject.Find("Player")
-    Player:AddComponent(typeof(LuaFramework.LuaBehaviour))
+   
     
     print(obj.name..">>>>>>>>>>>>>>>>>>>>>>>>>>OnItemClick is click")
     obj.transform:Find('txtItemName'):GetComponent("Text").text=math.random(0,10000);
@@ -93,7 +132,16 @@ function MyBuildsCtrl.OnItemClick(obj)
     buffer:WriteString(obj.name);
     buffer:WriteInt(200);
     networkMgr:SendMessage(buffer);
+
+    -- local tim=Timer.New(MyBuildsCtrl.timerTest,1,-1,false)
+    -- tim:Start()
+
 end
+
+function MyBuildsCtrl.timerTest()
+    print("Test Timer Method Print")
+end
+
 
 function MyBuildsCtrl.OnClick(obj)
     print(obj.name..">>>>>>>>>>>>  btnLogin is click")
@@ -102,14 +150,14 @@ function MyBuildsCtrl.OnClick(obj)
     --UIEventListen:RemoveClick(transform:Find("btnLogin").gameObject);
     UIEventListen:DebugAction()
 
-    UpdateBeat:Connect(this.Update2)
+    FixedUpdateBeat:Connect(this.Update2)
 
     coroutine.start(function()
         coroutine.wait(3)
         -- UpdateBeat:RemoveListener(updatHandle1)
         -- UpdateBeat:RemoveListener(updatHandle2)
         --UpdateBeat:Clear()
-         UpdateBeat:DisConnect(this.Update2)
+        FixedUpdateBeat:DisConnect(this.Update2)
         -- UpdateBeat:DisConnect(this.Update2)
     end)
 end

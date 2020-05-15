@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using LuaInterface;
 using System.Reflection;
 using System.IO;
-
+using UnityEngine.Networking;
 
 namespace LuaFramework {
     public class GameManager : Manager {
@@ -24,7 +24,7 @@ namespace LuaFramework {
         /// </summary>
         void Init() {
             DontDestroyOnLoad(gameObject);  //防止销毁自己
-
+               
             CheckExtractResource(); //释放资源
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             Application.targetFrameRate = AppConst.GameFrameRate;
@@ -58,11 +58,12 @@ namespace LuaFramework {
             Debug.Log(infile);
             Debug.Log(outfile);
             if (Application.platform == RuntimePlatform.Android) {
-                WWW www = new WWW(infile);
-                yield return www;
+                //WWW www = new WWW(infile);
+                UnityWebRequest uwr = new UnityWebRequest(infile);
+                yield return uwr;
 
-                if (www.isDone) {
-                    File.WriteAllBytes(outfile, www.bytes);
+                if (uwr.isDone) {
+                    File.WriteAllBytes(outfile, uwr.downloadHandler.data);
                 }
                 yield return 0;
             } else File.Copy(infile, outfile, true);
@@ -83,11 +84,11 @@ namespace LuaFramework {
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
                 if (Application.platform == RuntimePlatform.Android) {
-                    WWW www = new WWW(infile);
-                    yield return www;
+                    UnityWebRequest uwr = new UnityWebRequest(infile);
+                    yield return uwr;
 
-                    if (www.isDone) {
-                        File.WriteAllBytes(outfile, www.bytes);
+                    if (uwr.isDone) {
+                        File.WriteAllBytes(outfile, uwr.downloadHandler.data);
                     }
                     yield return 0;
                 } else {
@@ -121,17 +122,23 @@ namespace LuaFramework {
             string random = DateTime.Now.ToString("yyyymmddhhmmss");
             string listUrl = url + "files.txt?v=" + random;
             Debug.LogWarning("LoadUpdate---->>>" + listUrl);
-
-            WWW www = new WWW(listUrl); yield return www;
-            if (www.error != null) {
+            UnityWebRequest  uwr= UnityWebRequest.Get(listUrl); yield return uwr.SendWebRequest();
+            // WWW www = new WWW(listUrl); yield return www;
+            if(uwr.isNetworkError==false && uwr.isHttpError==false)
+            {
                 OnUpdateFailed(string.Empty);
                 yield break;
             }
+
+            //if (www.error != null) {
+            //    OnUpdateFailed(string.Empty);
+            //    yield break;
+            //}
             if (!Directory.Exists(dataPath)) {
                 Directory.CreateDirectory(dataPath);
             }
-            File.WriteAllBytes(dataPath + "files.txt", www.bytes);
-            string filesText = www.text;
+            File.WriteAllBytes(dataPath + "files.txt", uwr.downloadHandler.data);
+            string filesText = uwr.downloadHandler.text;
             string[] files = filesText.Split('\n');
 
             for (int i = 0; i < files.Length; i++) {
@@ -239,7 +246,7 @@ namespace LuaFramework {
             Util.CallMethod("Game", "OnInitOK");     //初始化完成
 
             initialize = true;
-
+            
             //类对象池测试
             var classObjPool = ObjPoolManager.CreatePool<TestObjectClass>(OnPoolGetElement, OnPoolPushElement);
             //方法1
